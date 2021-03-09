@@ -52,7 +52,7 @@
 		opacity: 0;
 		transform: translateY(-50%) translateX(-50%) scale(0.5);
 	}
-	30% {
+	50% {
 		opacity: 0;
 		transform: translateY(-50%) translateX(-50%) scale(0.5);
 	}
@@ -363,17 +363,14 @@ input:checked~.film-checkmark {
 	}
 	&-animate-compose {
 		animation: card-compose;
-		animation-duration: 400ms;
 		animation-fill-mode: forwards;
 	}
 	&-animate-decompose {
 		animation: card-decompose;
-		animation-duration: 400ms;
 		animation-fill-mode: forwards;
 	}
 	&-animate-accordion {
 		animation: card-accordion;
-		animation-duration: 500ms;
 		animation-fill-mode: forwards;
 	}
 }
@@ -553,12 +550,10 @@ input:checked~.film-checkmark {
 	}
 	&-fadein {
 		animation: infocard-fadein;
-		animation-duration: 300ms;
 		animation-fill-mode: forwards;
 	}
 	&-fadeout {
 		animation: infocard-fadein;
-		animation-duration: 300ms;
 		animation-direction: reverse;
 		animation-fill-mode: forwards;
 	}

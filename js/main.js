@@ -36,10 +36,11 @@ class HeroesProg {
 			});
 	}
 	// Анимация карточек
-	cardsAnimation(animationType) {
+	cardsAnimation(animationType, duration) {
 		return new Promise(resolve => {
-			const time = (animationType === `accordion`) ? 500 : 400;
+			// const time = (animationType === `accordion`) ? 500 : 400;
 			cardBox.querySelectorAll(`.card-body`).forEach(card => {
+				card.style.animationDuration = `${duration}ms`;
 				card.classList.toggle(`card-animate-${animationType}`);
 				card.classList.toggle(`card-body-hover`);
 			});
@@ -47,19 +48,22 @@ class HeroesProg {
 				cardBox.querySelectorAll(`.card-body`).forEach(card => {
 					card.classList.toggle(`card-animate-${animationType}`);
 					card.classList.toggle(`card-body-hover`);
+					card.style.animationDuration = ``;
 				});
 				resolve();
-			}, time);
+			}, duration);
 		});
 	}
 	// Анимация больших карточек
-	infocardAnnimation(animationType) {
+	infocardAnnimation(animationType, duration) {
 		return new Promise(resolve => {
+			infocard.style.animationDuration = `${duration}ms`;
 			infocard.classList.toggle(animationType);
 			setTimeout(() => {
 				infocard.classList.toggle(animationType);
+				infocard.style.animationDuration = ``;
 				resolve();
-			}, 300);
+			}, duration);
 		});
 	}
 	// Формируем список фильмов
@@ -113,14 +117,13 @@ class HeroesProg {
 	}
 	// Добавить карточки
 	addCards(filmName) {
-		// Запомним, какие уже есть карточки
-		const prevCardsId = this.idOfSelectedHeroes;
-		// Узнаем id героев, которые есть в выбранном фильме
+		// Узнаем id героев, которые есть в выбранном фильме и еще не выведены на экран
 		const heroesId = this.fullData.reduce((accum, elem, id) => {
 			// Отсечем героев без фильмов
 			if (elem.movies) {
-				// Проверим, был ли герой в выбранном фильме
-				if (elem.movies.some(movie => movie === filmName)) {
+				// Проверим, был ли герой в выбранном фильме и нет ли его среди выведенных карточек
+				if (elem.movies.some(movie => movie === filmName) &&
+				!this.idOfSelectedHeroes.includes(id)) {
 					return accum.concat(id);
 				} else {
 					return accum;
@@ -130,40 +133,37 @@ class HeroesProg {
 			}
 		}, []);
 
-		// Добавим id только тех героев, которые еще не выведены на экран
-		this.idOfSelectedHeroes = [...new Set([...heroesId, ...this.idOfSelectedHeroes])];
+		// // Добавим id новых героев
+		this.idOfSelectedHeroes = [...this.idOfSelectedHeroes, ...heroesId];
 
-		// Создаем карточки на основе полученной информации
+		// Создаем карточки для новых героев
 		const card = document.createElement(`div`);
 		card.classList = `card-body card-body-hover`;
-		this.idOfSelectedHeroes.forEach(heroId => {
-			// Если такой карточки еще не выведено, то добавляем ее
-			if (!prevCardsId.some(elem => elem === heroId)) {
-				const hero = this.fullData[heroId];
-				card.id = `card${heroId}`;
-				card.innerHTML = `
-					<div class="card-header">
-						<span class="card-name">${hero.name}</span>
-						<span class="card-species">${this.capitalize(hero.species)}</span>
+		heroesId.forEach(heroId => {
+			const hero = this.fullData[heroId];
+			card.id = `card${heroId}`;
+			card.innerHTML = `
+				<div class="card-header">
+					<span class="card-name">${hero.name}</span>
+					<span class="card-species">${this.capitalize(hero.species)}</span>
+				</div>
+				<div class="card-inner">
+					<div class="gender-container">
+						<div class="gender-box"><img class="gender-img" src="/img/white-icon/${hero.gender}.png" alt=""></div>
 					</div>
-					<div class="card-inner">
-						<div class="gender-container">
-							<div class="gender-box"><img class="gender-img" src="/img/white-icon/${hero.gender}.png" alt=""></div>
-						</div>
-						<div class="status-container">
-							<div class="status-box"><img class="status-img" src="/img/white-icon/${hero.status}.png" alt=""></div>
-						</div>
+					<div class="status-container">
+						<div class="status-box"><img class="status-img" src="/img/white-icon/${hero.status}.png" alt=""></div>
 					</div>
-				`;
-				card.querySelector(`.card-inner`).style.backgroundImage = `url('./${hero.photo}')`;
-				cardBox.append(card.cloneNode(true));
-			}
+				</div>
+			`;
+			card.querySelector(`.card-inner`).style.backgroundImage = `url('./${hero.photo}')`;
+			cardBox.append(card.cloneNode(true));
 		});
 		// Анимируем карточки
-		if (prevCardsId.length > 0) {
-			this.cardsAnimation(`accordion`);
+		if (this.idOfSelectedHeroes > heroesId) {
+			this.cardsAnimation(`accordion`, 500);
 		} else {
-			this.cardsAnimation(`decompose`);
+			this.cardsAnimation(`decompose`, 400);
 		}
 	}
 	// Убрать карточки
@@ -175,24 +175,28 @@ class HeroesProg {
 			films.forEach(film => {
 				selectedFilms.push(film.textContent);
 			});
-			this.cardsAnimation(`accordion`);
 			const cardsToDelete = [];
-			this.idOfSelectedHeroes.forEach(heroId => {
-				const hero = this.fullData[heroId];
-				// Если среди фильмов героя нет ни одного из оставшихся фильмов, то удаляем его
-				if (!hero.movies.some(film => selectedFilms.some(selectedFilm => selectedFilm === film))) {
-					const cardToRemove = document.getElementById(`card${heroId}`);
-					cardToRemove.remove();
-					cardsToDelete.push(heroId);
-				}
-			});
-			// Удаляем из памяти приложения id удаленных карточек
-			this.idOfSelectedHeroes = this.idOfSelectedHeroes.filter(heroId => !cardsToDelete.some(id => id === heroId));
+			this.cardsAnimation(`compose`, 250)
+				.then(() => {
+					this.idOfSelectedHeroes.forEach(heroId => {
+						const hero = this.fullData[heroId];
+						// Если среди фильмов героя нет ни одного из оставшихся фильмов, то удаляем его
+						if (!hero.movies.some(film => selectedFilms.some(selectedFilm => selectedFilm === film))) {
+							const cardToRemove = document.getElementById(`card${heroId}`);
+							cardToRemove.remove();
+							cardsToDelete.push(heroId);
+						}
+					});
+					this.cardsAnimation(`decompose`, 250);
+					// Удаляем из памяти приложения id удаленных карточек
+					this.idOfSelectedHeroes = this.idOfSelectedHeroes.filter(heroId => !cardsToDelete.some(id => id === heroId));
+				});
 		} else {	// Если выбранных фильмов не осталось
-			this.cardsAnimation(`compose`).then(() => {
-				cardBox.innerHTML = ``;
-				this.idOfSelectedHeroes = [];
-			});
+			this.cardsAnimation(`compose`, 400)
+				.then(() => {
+					cardBox.innerHTML = ``;
+					this.idOfSelectedHeroes = [];
+				});
 		}
 	}
 	// Показать подробную информацию
@@ -238,7 +242,7 @@ class HeroesProg {
 					<button class="infocard-close close"></button>
 				</div>
 			`;
-			this.infocardAnnimation(`infocard-fadein`);
+			this.infocardAnnimation(`infocard-fadein`, 300);
 		}
 	}
 	// Скрыть подробную информацию
@@ -246,10 +250,11 @@ class HeroesProg {
 		const target = (event.target === popup) ? event.target :
 			(event.target.closest(`.infocard-close`)) ? event.target.closest(`.infocard-close`) : undefined;
 		if (target) {
-			this.infocardAnnimation(`infocard-fadeout`).then(() => {
-				infocard.innerHTML = ``;
-				popup.style.display = `none`;
-			});
+			this.infocardAnnimation(`infocard-fadeout`, 300)
+				.then(() => {
+					infocard.innerHTML = ``;
+					popup.style.display = `none`;
+				});
 		}
 	}
 	// Добавить фильмы к фильтру
@@ -295,3 +300,5 @@ document.addEventListener(`DOMContentLoaded`, () => {
 	const prog = new HeroesProg();
 	prog.load();
 });
+
+// Поменял метод определения id карточек, которые нужно добавить на экран
