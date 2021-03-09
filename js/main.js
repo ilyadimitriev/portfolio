@@ -165,6 +165,8 @@ class HeroesProg {
 		} else {
 			this.cardsAnimation(`decompose`, 400);
 		}
+		// Включаем подсказку
+		document.querySelector(`.hint`).style.display = `block`;
 	}
 	// Убрать карточки
 	removeCards() {
@@ -197,6 +199,8 @@ class HeroesProg {
 					cardBox.innerHTML = ``;
 					this.idOfSelectedHeroes = [];
 				});
+			// Отключаем подсказку
+			document.querySelector(`.hint`).style.display = `none`;
 		}
 	}
 	// Показать подробную информацию
@@ -242,6 +246,7 @@ class HeroesProg {
 					<button class="infocard-close close"></button>
 				</div>
 			`;
+			this.handleMoviesSize(infocard);
 			this.infocardAnnimation(`infocard-fadein`, 300);
 		}
 	}
@@ -293,6 +298,15 @@ class HeroesProg {
 			this.removeCards();
 		}
 	}
+	handleMoviesSize(infocard) {
+		const textContainer = infocard.querySelector(`.infocard-text-container`);
+		const moviesList = infocard.querySelector(`.infocard-movies .infocard-info-data`);
+		let fontSize = +getComputedStyle(moviesList, '').fontSize.replace(/[^\d]/g, ``);
+		for (;textContainer.scrollHeight > textContainer.clientHeight && +fontSize > 12;) {
+			fontSize -= 1;
+			moviesList.style.fontSize = `${fontSize}px`;
+		}
+	}
 }
 
 // Запуск программы по готовности страницы
@@ -300,5 +314,3 @@ document.addEventListener(`DOMContentLoaded`, () => {
 	const prog = new HeroesProg();
 	prog.load();
 });
-
-// Поменял метод определения id карточек, которые нужно добавить на экран
