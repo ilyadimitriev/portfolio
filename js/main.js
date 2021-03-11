@@ -16,7 +16,7 @@ class HeroesProg {
 		this.idOfSelectedHeroes = [];
 	}
 	load() {
-		this.getData(`./dbHeroes.json`);
+		this.getData(`dbHeroes.json`);
 		filmlist.addEventListener(`input`, this.selectFilms.bind(this));
 		toplist.addEventListener(`click`, this.removeFilms.bind(this));
 		searchInput.addEventListener(`keyup`, this.searchFilm.bind(this));
@@ -38,7 +38,6 @@ class HeroesProg {
 	// Анимация карточек
 	cardsAnimation(animationType, duration) {
 		return new Promise(resolve => {
-			// const time = (animationType === `accordion`) ? 500 : 400;
 			cardBox.querySelectorAll(`.card-body`).forEach(card => {
 				card.style.animationDuration = `${duration}ms`;
 				card.classList.toggle(`card-animate-${animationType}`);
@@ -137,32 +136,39 @@ class HeroesProg {
 		this.idOfSelectedHeroes = [...this.idOfSelectedHeroes, ...heroesId];
 
 		// Создаем карточки для новых героев
-		const card = document.createElement(`div`);
-		card.classList = `card-body card-body-hover`;
-		heroesId.forEach(heroId => {
-			const hero = this.fullData[heroId];
-			card.id = `card${heroId}`;
-			card.innerHTML = `
-				<div class="card-header">
-					<span class="card-name">${hero.name}</span>
-					<span class="card-species">${this.capitalize(hero.species)}</span>
-				</div>
-				<div class="card-inner">
-					<div class="gender-container">
-						<div class="gender-box"><img class="gender-img" src="/img/white-icon/${hero.gender}.png" alt=""></div>
+		const add = () => {
+			const card = document.createElement(`div`);
+			card.classList = `card-body card-body-hover`;
+			heroesId.forEach(heroId => {
+				const hero = this.fullData[heroId];
+				card.id = `card${heroId}`;
+				card.innerHTML = `
+					<div class="card-header">
+						<span class="card-name">${hero.name}</span>
+						<span class="card-species">${this.capitalize(hero.species)}</span>
 					</div>
-					<div class="status-container">
-						<div class="status-box"><img class="status-img" src="/img/white-icon/${hero.status}.png" alt=""></div>
+					<div class="card-inner">
+						<div class="gender-container">
+							<div class="gender-box"><img class="gender-img" src="/img/white-icon/${hero.gender}.png" alt=""></div>
+						</div>
+						<div class="status-container">
+							<div class="status-box"><img class="status-img" src="/img/white-icon/${hero.status}.png" alt=""></div>
+						</div>
 					</div>
-				</div>
-			`;
-			card.querySelector(`.card-inner`).style.backgroundImage = `url('./${hero.photo}')`;
-			cardBox.append(card.cloneNode(true));
-		});
+				`;
+				card.querySelector(`.card-inner`).style.backgroundImage = `url('./${hero.photo}')`;
+				cardBox.append(card.cloneNode(true));
+			});
+		};
 		// Анимируем карточки
-		if (this.idOfSelectedHeroes > heroesId) {
-			this.cardsAnimation(`accordion`, 500);
+		if (this.idOfSelectedHeroes.length > heroesId.length) {
+			this.cardsAnimation(`compose`, 250)
+				.then(() => {
+					add();
+					this.cardsAnimation(`decompose`, 250);
+				});
 		} else {
+			add();
 			this.cardsAnimation(`decompose`, 400);
 		}
 		// Включаем подсказку
