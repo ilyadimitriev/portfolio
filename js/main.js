@@ -26,13 +26,23 @@ class HeroesProg {
 	}
 	// Получаем данные
 	getData(url) {
-		return fetch(url).then(response => response.json())
+		return fetch(url)
+			.then(response => {
+				if (response.status !== 200) {
+					throw new Error(`Возникла ошибка при отправки данных`);
+				} else {
+					return response.json();
+				}
+			})
 			.then(data => {
-				this.fullData = data.map(item => item);
+				this.fullData = [...data];
 				const allMovieNames = data.reduce((accum, item) => accum.concat(item.movies), []);
 				this.movieNames = allMovieNames.filter((item, i) => allMovieNames.indexOf(item) === i && item);
 				this.movieNames = this.movieNames.sort();
 				this.formFilmlist();
+			})
+			.catch(error => {
+				console.log(error);
 			});
 	}
 	// Анимация карточек
