@@ -2,6 +2,7 @@
 import showPhone from './modules/showPhone';
 import handleMenu from './modules/handleMenu';
 import smoothScroll from './modules/smoothScroll';
+import handleRepairTypes from './modules/handleRepairTypes';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -16,6 +17,7 @@ const init = () => {
 	showPhone();
 	handleMenu();
 	scrollUp();
+	handleRepairTypes();
 };
 
 init();

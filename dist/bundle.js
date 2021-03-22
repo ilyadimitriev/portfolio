@@ -38,7 +38,7 @@ eval("\nmodule.exports = function () {\n\treturn /[\\u001b\\u009b][[()#;?]*(?:[0
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_showPhone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/showPhone */ \"./modules/showPhone.js\");\n/* harmony import */ var _modules_handleMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/handleMenu */ \"./modules/handleMenu.js\");\n/* harmony import */ var _modules_smoothScroll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/smoothScroll */ \"./modules/smoothScroll.js\");\n/* eslint-disable indent */\n\n\n\ndocument.addEventListener('DOMContentLoaded', function () {\n  var scrollUp = function scrollUp() {\n    var upBtn = document.querySelector('.button-footer');\n    upBtn.addEventListener('click', function (event) {\n      (0,_modules_smoothScroll__WEBPACK_IMPORTED_MODULE_2__.default)(event);\n    });\n  };\n\n  var init = function init() {\n    (0,_modules_showPhone__WEBPACK_IMPORTED_MODULE_0__.default)();\n    (0,_modules_handleMenu__WEBPACK_IMPORTED_MODULE_1__.default)();\n    scrollUp();\n  };\n\n  init();\n});\n\n//# sourceURL=webpack:///./index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_showPhone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/showPhone */ \"./modules/showPhone.js\");\n/* harmony import */ var _modules_handleMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/handleMenu */ \"./modules/handleMenu.js\");\n/* harmony import */ var _modules_smoothScroll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/smoothScroll */ \"./modules/smoothScroll.js\");\n/* harmony import */ var _modules_handleRepairTypes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/handleRepairTypes */ \"./modules/handleRepairTypes.js\");\n/* eslint-disable indent */\n\n\n\n\ndocument.addEventListener('DOMContentLoaded', function () {\n  var scrollUp = function scrollUp() {\n    var upBtn = document.querySelector('.button-footer');\n    upBtn.addEventListener('click', function (event) {\n      (0,_modules_smoothScroll__WEBPACK_IMPORTED_MODULE_2__.default)(event);\n    });\n  };\n\n  var init = function init() {\n    (0,_modules_showPhone__WEBPACK_IMPORTED_MODULE_0__.default)();\n    (0,_modules_handleMenu__WEBPACK_IMPORTED_MODULE_1__.default)();\n    scrollUp();\n    (0,_modules_handleRepairTypes__WEBPACK_IMPORTED_MODULE_3__.default)();\n  };\n\n  init();\n});\n\n//# sourceURL=webpack:///./index.js?");
 
 /***/ }),
 
@@ -53,6 +53,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./modules/handleRepairTypes.js":
+/*!**************************************!*\
+  !*** ./modules/handleRepairTypes.js ***!
+  \**************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return __WEBPACK_DEFAULT_EXPORT__; }\n/* harmony export */ });\n/* harmony import */ var _showPopup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./showPopup */ \"./modules/showPopup.js\");\n\n\nvar handleRepairTypes = function handleRepairTypes() {\n  var repairBtns = document.querySelectorAll('.link-popup-repair');\n  repairBtns.forEach(function (btn) {\n    btn.addEventListener('click', _showPopup__WEBPACK_IMPORTED_MODULE_0__.default.bind(null, 'popup-repair-types'));\n  });\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (handleRepairTypes);\n\n//# sourceURL=webpack:///./modules/handleRepairTypes.js?");
+
+/***/ }),
+
 /***/ "./modules/showPhone.js":
 /*!******************************!*\
   !*** ./modules/showPhone.js ***!
@@ -61,6 +72,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return __WEBPACK_DEFAULT_EXPORT__; }\n/* harmony export */ });\nvar showPhone = function showPhone() {\n  var btn = document.querySelector('.header-contacts__arrow');\n  var secondNumber = document.querySelector('.header-contacts__phone-number-accord');\n  btn.addEventListener('click', function () {\n    btn.classList.toggle('active');\n    secondNumber.classList.toggle('active');\n  });\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (showPhone);\n\n//# sourceURL=webpack:///./modules/showPhone.js?");
+
+/***/ }),
+
+/***/ "./modules/showPopup.js":
+/*!******************************!*\
+  !*** ./modules/showPopup.js ***!
+  \******************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return __WEBPACK_DEFAULT_EXPORT__; }\n/* harmony export */ });\nvar showPopup = function showPopup(selectedPopup) {\n  var allPopups = document.querySelectorAll('.popup');\n  allPopups.forEach(function (popup) {\n    // если содержит переданный класс, то отображаем\n    if (popup.classList.contains(\"\".concat(selectedPopup))) {\n      popup.style.visibility = \"visible\"; // если это меню, то закрываем\n    } else if (popup.classList.contains(\"popup-menu\")) {\n      popup.querySelector('.popup-dialog-menu').classList.remove('active');\n    }\n  });\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (showPopup);\n\n//# sourceURL=webpack:///./modules/showPopup.js?");
 
 /***/ }),
 
@@ -473,7 +495,7 @@ eval("var map = {\n\t\"./log\": \"../node_modules/webpack/hot/log.js\"\n};\n\n\n
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	!function() {
-/******/ 		__webpack_require__.h = function() { return "b933a0b89264e717ffe7"; }
+/******/ 		__webpack_require__.h = function() { return "4f963e8290fefaa2431c"; }
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
