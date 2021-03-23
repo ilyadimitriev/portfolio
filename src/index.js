@@ -4,6 +4,10 @@ import handleMenu from './modules/handleMenu';
 import smoothScroll from './modules/smoothScroll';
 import togglePopup from './modules/togglePopup';
 import phoneMask from './modules/phoneMask';
+import accordionQA from './modules/accordionQA';
+import showHint from './modules/showHint';
+
+import sliderCarousel from './plugins/sliderCarousel';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -14,10 +18,32 @@ const scrollUp = () => {
 	});
 };
 
+const carousel = new sliderCarousel({
+	wrap: `.partners-slider`,
+	main: `.partners-wrapper`,
+	prev: '#partners-arrow_left',
+	next: '#partners-arrow_right',
+	slidesToShow: 3,
+	infinity: true,
+	responsive: [
+		{
+			breakpoint: 1024,
+			slidesToShow: 2
+		},
+		{
+			breakpoint: 576,
+			slidesToShow: 1
+		}
+	]
+});
+
 const init = () => {
 	showPhone();
 	scrollUp();
 	phoneMask();
+	accordionQA();
+	showHint();
+	carousel.init();
 	handleMenu();
 	togglePopup({
 		popupType: 'popup-menu',
