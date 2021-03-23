@@ -38,7 +38,7 @@ eval("\nmodule.exports = function () {\n\treturn /[\\u001b\\u009b][[()#;?]*(?:[0
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_showPhone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/showPhone */ \"./modules/showPhone.js\");\n/* harmony import */ var _modules_handleMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/handleMenu */ \"./modules/handleMenu.js\");\n/* harmony import */ var _modules_smoothScroll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/smoothScroll */ \"./modules/smoothScroll.js\");\n/* harmony import */ var _modules_handleRepairTypes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/handleRepairTypes */ \"./modules/handleRepairTypes.js\");\n/* eslint-disable indent */\n\n\n\n\ndocument.addEventListener('DOMContentLoaded', function () {\n  var scrollUp = function scrollUp() {\n    var upBtn = document.querySelector('.button-footer');\n    upBtn.addEventListener('click', function (event) {\n      (0,_modules_smoothScroll__WEBPACK_IMPORTED_MODULE_2__.default)(event);\n    });\n  };\n\n  var init = function init() {\n    (0,_modules_showPhone__WEBPACK_IMPORTED_MODULE_0__.default)();\n    (0,_modules_handleMenu__WEBPACK_IMPORTED_MODULE_1__.default)();\n    scrollUp();\n    (0,_modules_handleRepairTypes__WEBPACK_IMPORTED_MODULE_3__.default)();\n  };\n\n  init();\n});\n\n//# sourceURL=webpack:///./index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _modules_showPhone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/showPhone */ \"./modules/showPhone.js\");\n/* harmony import */ var _modules_handleMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/handleMenu */ \"./modules/handleMenu.js\");\n/* harmony import */ var _modules_smoothScroll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/smoothScroll */ \"./modules/smoothScroll.js\");\n/* harmony import */ var _modules_togglePopup__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/togglePopup */ \"./modules/togglePopup.js\");\n/* harmony import */ var _modules_phoneMask__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/phoneMask */ \"./modules/phoneMask.js\");\n/* eslint-disable indent */\n\n\n\n\n\ndocument.addEventListener('DOMContentLoaded', function () {\n  var scrollUp = function scrollUp() {\n    var upBtn = document.querySelector('.button-footer');\n    upBtn.addEventListener('click', function (event) {\n      (0,_modules_smoothScroll__WEBPACK_IMPORTED_MODULE_2__.default)(event);\n    });\n  };\n\n  var init = function init() {\n    (0,_modules_showPhone__WEBPACK_IMPORTED_MODULE_0__.default)();\n    scrollUp();\n    (0,_modules_phoneMask__WEBPACK_IMPORTED_MODULE_4__.default)();\n    (0,_modules_handleMenu__WEBPACK_IMPORTED_MODULE_1__.default)();\n    (0,_modules_togglePopup__WEBPACK_IMPORTED_MODULE_3__.default)({\n      popupType: 'popup-menu',\n      openBtnClass: 'link-popup-menu'\n    });\n    (0,_modules_togglePopup__WEBPACK_IMPORTED_MODULE_3__.default)({\n      popupType: 'popup-repair-types',\n      openBtnClass: 'link-popup-repair'\n    });\n    (0,_modules_togglePopup__WEBPACK_IMPORTED_MODULE_3__.default)({\n      popupType: 'popup-privacy',\n      openBtnClass: 'link-popup-privacy'\n    });\n    (0,_modules_togglePopup__WEBPACK_IMPORTED_MODULE_3__.default)({\n      popupType: 'popup-consultation',\n      openBtnClass: 'link-popup-consultation'\n    });\n  };\n\n  init();\n});\n\n//# sourceURL=webpack:///./index.js?");
 
 /***/ }),
 
@@ -53,14 +53,14 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
-/***/ "./modules/handleRepairTypes.js":
-/*!**************************************!*\
-  !*** ./modules/handleRepairTypes.js ***!
-  \**************************************/
+/***/ "./modules/phoneMask.js":
+/*!******************************!*\
+  !*** ./modules/phoneMask.js ***!
+  \******************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return __WEBPACK_DEFAULT_EXPORT__; }\n/* harmony export */ });\n/* harmony import */ var _showPopup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./showPopup */ \"./modules/showPopup.js\");\n\n\nvar handleRepairTypes = function handleRepairTypes() {\n  var repairBtns = document.querySelectorAll('.link-popup-repair');\n  repairBtns.forEach(function (btn) {\n    btn.addEventListener('click', _showPopup__WEBPACK_IMPORTED_MODULE_0__.default.bind(null, 'popup-repair-types'));\n  });\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (handleRepairTypes);\n\n//# sourceURL=webpack:///./modules/handleRepairTypes.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return __WEBPACK_DEFAULT_EXPORT__; }\n/* harmony export */ });\nvar phoneMask = function phoneMask() {\n  var phoneInputElems = document.querySelectorAll('[name=\"phone\"]');\n  phoneInputElems.forEach(function (input) {\n    input.addEventListener('focus', function () {\n      if (input.value === '') {\n        input.value = '+7 (';\n      }\n    });\n    input.addEventListener('input', function (event) {\n      var length = input.value.length;\n\n      if (event.inputType === 'deleteContentBackward') {\n        if (length === 15) {\n          input.value = input.value.slice(0, 14);\n        } else if (length === 12) {\n          input.value = input.value.slice(0, 11);\n        } else if (length === 8) {\n          input.value = input.value.slice(0, 6);\n        } else if (length <= 4) {\n          input.value = '+7 (';\n        }\n      } else {\n        if (/\\D$/.test(input.value)) {\n          input.value = input.value.replace(/[\\D]$/, '');\n          return;\n        }\n\n        if (length === 7) {\n          input.value += ') ';\n        } else if (length === 12) {\n          input.value += '-';\n        } else if (length === 15) {\n          input.value += '-';\n        } else if (length > 18) {\n          input.value = input.value.replace(/.$/, '');\n          return;\n        }\n      }\n    });\n    input.addEventListener('blur', function () {\n      if (input.value.length <= 4) {\n        input.value = '';\n      }\n    });\n  });\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (phoneMask);\n\n//# sourceURL=webpack:///./modules/phoneMask.js?");
 
 /***/ }),
 
@@ -75,17 +75,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
-/***/ "./modules/showPopup.js":
-/*!******************************!*\
-  !*** ./modules/showPopup.js ***!
-  \******************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return __WEBPACK_DEFAULT_EXPORT__; }\n/* harmony export */ });\nvar showPopup = function showPopup(selectedPopup) {\n  var allPopups = document.querySelectorAll('.popup');\n  allPopups.forEach(function (popup) {\n    // если содержит переданный класс, то отображаем\n    if (popup.classList.contains(\"\".concat(selectedPopup))) {\n      popup.style.visibility = \"visible\"; // если это меню, то закрываем\n    } else if (popup.classList.contains(\"popup-menu\")) {\n      popup.querySelector('.popup-dialog-menu').classList.remove('active');\n    }\n  });\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (showPopup);\n\n//# sourceURL=webpack:///./modules/showPopup.js?");
-
-/***/ }),
-
 /***/ "./modules/smoothScroll.js":
 /*!*********************************!*\
   !*** ./modules/smoothScroll.js ***!
@@ -94,6 +83,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return __WEBPACK_DEFAULT_EXPORT__; }\n/* harmony export */ });\nvar smoothScroll = function smoothScroll(event) {\n  event.preventDefault();\n  var target = event.target.closest(\"a\"),\n      destination = target.getAttribute(\"href\");\n  document.querySelector(destination).scrollIntoView({\n    behavior: 'smooth',\n    block: 'start'\n  });\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (smoothScroll);\n\n//# sourceURL=webpack:///./modules/smoothScroll.js?");
+
+/***/ }),
+
+/***/ "./modules/togglePopup.js":
+/*!********************************!*\
+  !*** ./modules/togglePopup.js ***!
+  \********************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": function() { return __WEBPACK_DEFAULT_EXPORT__; }\n/* harmony export */ });\nvar togglePopup = function togglePopup(_ref) {\n  var popupType = _ref.popupType,\n      openBtnClass = _ref.openBtnClass;\n  var openBtns = document.querySelectorAll(\".\".concat(openBtnClass));\n  var closeBtn = document.querySelector(\".\".concat(popupType, \" .close\"));\n\n  var toggle = function toggle(popupType, action) {\n    var allPopups = document.querySelectorAll('.popup');\n    allPopups.forEach(function (popup) {\n      if (action === 'open') {\n        if (popup.classList.contains(\"\".concat(popupType))) {\n          popup.style.visibility = \"visible\";\n        } else if (popup.classList.contains(\"popup-menu\") && popupType !== \"popup-menu\") {\n          popup.querySelector('.popup-dialog-menu').classList.remove('active');\n          popup.style.visibility = \"hidden\";\n        }\n      } else if (action === 'close') {\n        if (popup.classList.contains(\"\".concat(popupType))) {\n          popup.style.visibility = \"hidden\";\n        }\n      }\n    });\n  };\n\n  openBtns.forEach(function (btn) {\n    btn.addEventListener('click', toggle.bind(null, \"\".concat(popupType), 'open'));\n  });\n  closeBtn.addEventListener('click', toggle.bind(null, \"\".concat(popupType), 'close'));\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (togglePopup);\n\n//# sourceURL=webpack:///./modules/togglePopup.js?");
 
 /***/ }),
 
@@ -495,7 +495,7 @@ eval("var map = {\n\t\"./log\": \"../node_modules/webpack/hot/log.js\"\n};\n\n\n
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	!function() {
-/******/ 		__webpack_require__.h = function() { return "4f963e8290fefaa2431c"; }
+/******/ 		__webpack_require__.h = function() { return "adc1db1a76408c2885b9"; }
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

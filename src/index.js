@@ -2,7 +2,8 @@
 import showPhone from './modules/showPhone';
 import handleMenu from './modules/handleMenu';
 import smoothScroll from './modules/smoothScroll';
-import handleRepairTypes from './modules/handleRepairTypes';
+import togglePopup from './modules/togglePopup';
+import phoneMask from './modules/phoneMask';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -15,9 +16,25 @@ const scrollUp = () => {
 
 const init = () => {
 	showPhone();
-	handleMenu();
 	scrollUp();
-	handleRepairTypes();
+	phoneMask();
+	handleMenu();
+	togglePopup({
+		popupType: 'popup-menu',
+		openBtnClass: 'link-popup-menu'
+	});
+	togglePopup({
+		popupType: 'popup-repair-types',
+		openBtnClass: 'link-popup-repair'
+	});
+	togglePopup({
+		popupType: 'popup-privacy',
+		openBtnClass: 'link-popup-privacy'
+	});
+	togglePopup({
+		popupType: 'popup-consultation',
+		openBtnClass: 'link-popup-consultation'
+	});
 };
 
 init();
