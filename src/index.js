@@ -7,8 +7,11 @@ import phoneMask from './modules/phoneMask';
 import accordionQA from './modules/accordionQA';
 import showHint from './modules/showHint';
 import showAdvantages from './modules/showAdvantages';
+import handleTransparencyPopup from './modules/handleTransparencyPopup';
+import toggleRepairTypes from './modules/toggleRepairTypes';
+import toggleScheme from './modules/toggleScheme';
 
-import sliderCarousel from './plugins/sliderCarousel';
+import SliderCarousel from './plugins/sliderCarousel';
 import TinyInfinitCarousel from './plugins/tinyInfinitCarousel';
 import StaticSlider from './plugins/staticSlider';
 
@@ -29,12 +32,82 @@ const advantagesCarousel = new TinyInfinitCarousel({
 	classToAdd: 'active-item'
 });
 
+const repairTypesCarousel = new SliderCarousel({
+	wrap: `.nav-list-repair`,
+	main: `.repair-types-nav`,
+	prev: '#nav-arrow-repair-left_base',
+	next: '#nav-arrow-repair-right_base',
+	slidesToShow: false,
+	infinity: true,
+	responsive: [
+		{
+			breakpoint: 1024,
+			slidesToShow: 3
+		},
+		{
+			breakpoint: 768,
+			slidesToShow: 2
+		},
+		{
+			breakpoint: 576,
+			slidesToShow: 1
+		}
+	]
+});
+
+const schemeTypesCarousel = new SliderCarousel({
+	wrap: `.nav-scheme-slider`,
+	main: `.nav-list-repair`,
+	prev: '#nav-arrow-scheme_left',
+	next: '#nav-arrow-scheme_right',
+	slidesToShow: false,
+	infinity: true,
+	responsive: [
+		{
+			breakpoint: 1024,
+			slidesToShow: 3
+		},
+		{
+			breakpoint: 768,
+			slidesToShow: 3
+		},
+		{
+			breakpoint: 576,
+			slidesToShow: 1
+		}
+	]
+});
+
+
 const problemsCarousel = new TinyInfinitCarousel({
 	wrap: `.problems-slider`,
 	main: `.problems-slider-wrap`,
 	prev: '#problems-arrow_left',
 	next: '#problems-arrow_right',
 	classToAdd: 'active-item'
+});
+
+const designTypesCarousel = new SliderCarousel({
+	wrap: `.nav-list-designs`,
+	main: `.nav-designs`,
+	prev: '#nav-arrow-designs_left',
+	next: '#nav-arrow-designs_right',
+	slidesToShow: false,
+	infinity: true,
+	responsive: [
+		{
+			breakpoint: 1024,
+			slidesToShow: 3
+		},
+		{
+			breakpoint: 768,
+			slidesToShow: 3
+		},
+		{
+			breakpoint: 576,
+			slidesToShow: 1
+		}
+	]
 });
 
 const transparencyCarousel = new TinyInfinitCarousel({
@@ -51,7 +124,7 @@ const transparencyCarousel = new TinyInfinitCarousel({
 	]
 });
 
-const carousel = new sliderCarousel({
+const partnersCarousel = new SliderCarousel({
 	wrap: `.partners-slider`,
 	main: `.partners-wrapper`,
 	prev: '#partners-arrow_left',
@@ -77,21 +150,6 @@ const reviewsCarousel = new TinyInfinitCarousel({
 	next: '#reviews-arrow_right'
 });
 
-// const popupTransparencyCarousel = new TinyInfinitCarousel({
-// 	wrap: `.popup-transparency-slider`,
-// 	main: `.popup-transparency-slider-wrap`,
-// 	prev: '#transparency_left',
-// 	next: '#transparency_right'
-// });
-
-const popupTransparencyCarousel = new StaticSlider({
-	wrap: `.popup-transparency-slider`,
-	main: `.popup-transparency-slider-wrap`,
-	prev: '#transparency_left',
-	next: '#transparency_right',
-	dots: '#transparency-popup-counter'
-});
-
 const init = () => {
 	showPhone();
 	scrollUp();
@@ -100,10 +158,15 @@ const init = () => {
 	showAdvantages();
 	showHint();
 	advantagesCarousel.init();
+	toggleRepairTypes();
+	repairTypesCarousel.init();
 	transparencyCarousel.init();
 	problemsCarousel.init();
+	designTypesCarousel.init();
 	reviewsCarousel.init();
-	carousel.init();
+	schemeTypesCarousel.init();
+	toggleScheme();
+	partnersCarousel.init();
 	handleMenu();
 	togglePopup({
 		popupType: 'popup-menu',
@@ -125,7 +188,7 @@ const init = () => {
 		popupType: 'popup-transparency',
 		openBtnClass: 'transparency-item__img'
 	});
-	popupTransparencyCarousel.init();
+	handleTransparencyPopup();
 };
 
 init();

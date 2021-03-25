@@ -1177,24 +1177,41 @@ template, [hidden] {
     line-height: 46px;
     margin-top: 22px;
     font-size: 20px;
+    padding: 0 30px;
+    border: 2px solid #afafaf !important;
+    border-radius: 23px;
     color: #322823; }
+    .repair-types-nav__item.active {
+    border: 2px solid #F48922 !important;
+    }
     @media (max-width: 1024px) {
       .repair-types-nav__item {
         height: 37px;
+        padding: 0;
         line-height: 37px;
         font-size: 16px;
+        border-radius: 18px;
         margin-top: 0; }
         .repair-types-nav__item svg {
           height: 37px; } }
     @media (max-width: 575px) {
       .repair-types-nav__item {
         height: 33px;
+        border-radius: 16px;
         line-height: 33px;
         font-size: 14px;
         margin-top: 0; }
         .repair-types-nav__item svg {
           height: 33px; } }
-    .repair-types-nav__item:first-child {
+    .repair-slider {
+      display: none;
+    }
+    .repair-slider.active {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    /* .repair-types-nav__item:first-child {
       width: 259px;
       margin-top: 0; }
       @media (max-width: 1024px) {
@@ -1256,7 +1273,7 @@ template, [hidden] {
         .repair-types-nav__item:nth-child(5) {
           width: 223px; }
           .repair-types-nav__item:nth-child(5) svg {
-            width: 223px; } }
+            width: 223px; } } */
 
 .feedback-block {
   position: relative;
@@ -2433,6 +2450,10 @@ div.wave-block:nth-child(17):after {
   .designs-nav__item {
     height: 40px;
     line-height: 40px; }
+  .nav-designs-slider__item svg {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
     @media (max-width: 575px) {
       .designs-nav__item {
         height: 33px;
@@ -3117,6 +3138,10 @@ div.wave-block:nth-child(17):after {
       min-width: 196px; }
     .scheme-nav__item:nth-child(6) {
       min-width: 131px; }
+      .scheme-nav__item svg {
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+      }
   .scheme-slider {
     height: 593px;
     margin-top: 32px;
@@ -5267,24 +5292,24 @@ div.wave-block:nth-child(17):after {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    min-width: 1076px;
+    /* min-width: 1076px; */
     -webkit-transition: 0.4s;
     transition: 0.4s; }
     .nav-list-repair {
-      min-width: 390px;
+      /* min-width: none; */
       display: block; }
       @media (max-width: 1024px) {
         .nav-list-repair {
-          min-width: 1200px;
+          /* min-width: 1200px; */
           display: -webkit-box;
           display: -ms-flexbox;
           display: flex;
           -ms-flex-wrap: wrap;
           flex-wrap: wrap;
           max-width: 100%; } }
-      @media (max-width: 575px) {
+      /* @media (max-width: 575px) {
         .nav-list-repair {
-          min-width: 1086px; } }
+          min-width: 1086px; } */
     .nav-list-popup-repair {
       text-align: center;
       min-width: 320px;
@@ -5639,6 +5664,7 @@ div.wave-block:nth-child(17):after {
       height: 29px;
       font-size: 12px; } }
   .button-footer {
+    box-sizing: content-box;
     width: 148px;
     height: 48px;
     margin-right: -74px;
@@ -5647,6 +5673,7 @@ div.wave-block:nth-child(17):after {
     text-transform: uppercase;
     background: transparent;
     color: #322823;
+    vertical-align: middle;
     cursor: pointer; }
     @media (max-width: 1024px) {
       .button-footer {
@@ -5658,14 +5685,22 @@ div.wave-block:nth-child(17):after {
         height: 32px;
         margin-left: auto;
         margin-right: auto;
-        margin-bottom: 25px; } }
+        margin-bottom: 25px;
+       } }
     .button-footer a {
       font-size: 18px;
       display: block;
+      line-height: 48px;
       color: #322823; }
       @media (max-width: 1024px) {
         .button-footer a {
-          font-size: 16px; } }
+          font-size: 16px;
+          line-height: 42px; } }
+          @media (max-width: 575px) {
+              .button-footer a {
+                line-height: 32px;
+              }
+            }
     .button-footer:hover {
       -webkit-text-decoration-line: underline;
       text-decoration-line: underline; }

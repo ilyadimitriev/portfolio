@@ -5,7 +5,7 @@ class sliderCarousel {
 		prev,
 		next,
 		position = 0,
-		slidesToShow = 4,
+		slidesToShow = false,
 		infinity = false,
 		responsive = []
 	}) {
@@ -21,6 +21,13 @@ class sliderCarousel {
 			slideWidth: (Math.floor((100 / this.slidesToShow * 10)) / 10)
 		};
 		this.responsive = responsive;
+		this.prevBtnFunc = () => {
+			this.prevSlider.call(this);
+		};
+		this.nextBtnFunc = () => {
+			this.nextSlider.call(this);
+		};
+		this.styleName = main.replace(/^[#.]/, '');
 	}
 	init() {
 		this.addGloClass();
@@ -36,30 +43,45 @@ class sliderCarousel {
 			this.responseInit.call(this);
 		}
 	}
+	remove() {
+		this.prev.removeEventListener('click', this.prevBtnFunc);
+		this.next.removeEventListener('click', this.nextBtnFunc);
+		this.removeGloClass();
+		this.wrap.style.transform = ``;
+	}
 	addGloClass() {
-		this.main.classList.add(`glo-slider`);
-		this.wrap.classList.add(`glo-slider__wrap`);
+		this.main.classList.add(`${this.styleName}-slider`);
+		this.wrap.classList.add(`${this.styleName}-slider__wrap`);
 		for (const item of this.slides) {
-			item.classList.add(`glo-slider__item`);
+			item.classList.add(`${this.styleName}-slider__item`);
+		}
+	}
+	removeGloClass() {
+		this.main.classList.remove(`${this.styleName}-slider`);
+		this.wrap.classList.remove(`${this.styleName}-slider__wrap`);
+		for (const item of this.slides) {
+			item.classList.remove(`${this.styleName}-slider__item`);
 		}
 	}
 	addStyle() {
-		let style = document.getElementById(`sliderCarousel-style`);
+		let style = document.getElementById(`${this.styleName}-style`);
 		if (!style) {
 			style = document.createElement(`style`);
-			style.id = `sliderCarousel-style`;
+			style.id = `${this.styleName}-style`;
 		}
 		style.textContent = `
-			.glo-slider {
+			.${this.styleName}-slider {
 				position: relative;
 				overflow: hidden !important;
 			}
-			.glo-slider__wrap {
+			.${this.styleName}-slider__wrap {
 				display: flex !important;
+				flex-direction: row;
+				flex-wrap: nowrap;
 				transition: transform 0.3s !important;
 				will-change: transform !important;
 			}
-			.glo-slider__item {
+			.${this.styleName}-slider__item {
 				flex: 0 0 ${this.options.slideWidth}% !important;
 				margin: auto 0 !important;
 			}
@@ -67,8 +89,8 @@ class sliderCarousel {
 		document.head.appendChild(style);
 	}
 	controlSlider() {
-		this.prev.addEventListener(`click`, this.prevSlider.bind(this));
-		this.next.addEventListener(`click`, this.nextSlider.bind(this));
+		this.prev.addEventListener(`click`, this.prevBtnFunc);
+		this.next.addEventListener(`click`, this.nextBtnFunc);
 	}
 	prevSlider() {
 		if (this.options.infinity || this.options.position > 0) {
@@ -147,14 +169,26 @@ class sliderCarousel {
 					}
 				});
 				this.slidesToShow = this.responsive[responsiveId].slidesToShow;
-				this.options.slideWidth = (Math.floor((100 / this.slidesToShow * 10)) / 10);
-				this.wrap.style.transform = `translateX(-0%)`;
-				this.addStyle();
+				if (this.slidesToShow) {
+					this.options.slideWidth = (Math.floor((100 / this.slidesToShow * 10)) / 10);
+					this.wrap.style.transform = `translateX(-0%)`;
+					this.addGloClass();
+					this.addStyle();
+					this.controlSlider();
+				} else {
+					this.remove();
+				}
 			} else {
-				this.slidesToShow = slidesToShowDefault;
-				this.options.slideWidth = (Math.floor((100 / this.slidesToShow * 10)) / 10);
-				this.wrap.style.transform = `translateX(-0%)`;
-				this.addStyle();
+				if (this.slidesToShow) {
+					this.slidesToShow = slidesToShowDefault;
+					this.options.slideWidth = (Math.floor((100 / this.slidesToShow * 10)) / 10);
+					this.wrap.style.transform = `translateX(-0%)`;
+					this.addGloClass();
+					this.addStyle();
+					this.controlSlider();
+				} else {
+					this.remove();
+				}
 			}
 		};
 		checkResponse();

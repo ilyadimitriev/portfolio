@@ -3,7 +3,7 @@ const showHint = () => {
 	const allProblems = problems.querySelectorAll('.problems-item');
 	allProblems.forEach(elem => {
 		elem.addEventListener('mouseenter', () => {
-			if (screen.width > 1024) {
+			if (window.innerWidth > 1024) {
 				const popup = elem.querySelector('.problems-item-popup');
 				elem.classList.add('active-item');
 				if (popup.getBoundingClientRect().top < 0) {

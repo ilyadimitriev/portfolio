@@ -3,7 +3,7 @@ const togglePopup = ({
 	openBtnClass
 }) => {
 	const openBtns = document.querySelectorAll(`.${openBtnClass}`);
-	const closeBtn = document.querySelector(`.${popupType} .close`);
+	const closeBtns = document.querySelectorAll(`.${popupType} .close`);
 	const toggle = (popupType, action) => {
 		const allPopups = document.querySelectorAll('.popup');
 		allPopups.forEach(popup => {
@@ -24,7 +24,9 @@ const togglePopup = ({
 	openBtns.forEach(btn => {
 		btn.addEventListener('click', toggle.bind(null, `${popupType}`, 'open'));
 	});
-	closeBtn.addEventListener('click', toggle.bind(null, `${popupType}`, 'close'));
+	closeBtns.forEach(btn => {
+		btn.addEventListener('click', toggle.bind(null, `${popupType}`, 'close'));
+	});
 };
 
 export default togglePopup;
