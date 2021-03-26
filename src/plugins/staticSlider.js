@@ -59,7 +59,6 @@ class staticSlider {
 		}
 		style.textContent = `
 			.static-slider {
-				position: relative;
 			}
 			.static-slider__wrap {
 				position: relative;
@@ -122,6 +121,9 @@ class staticSlider {
 	handleCounter() {
 		this.counter.querySelector('.slider-counter-content__current').textContent = this.currentSlide + 1;
 		this.counter.querySelector('.slider-counter-content__total').textContent = this.slides.length;
+	}
+	getData() {
+		return this.currentSlide;
 	}
 	setCurrentSlide(num) {
 		if (num > this.slides.length - 1) {

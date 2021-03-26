@@ -15,6 +15,7 @@ class sliderCarousel {
 		this.prev = document.querySelector(prev);
 		this.slides = this.wrap.children;
 		this.slidesToShow = slidesToShow;
+		this.slidesToShowDefault = slidesToShow;
 		this.options = {
 			position,
 			infinity,
@@ -28,6 +29,22 @@ class sliderCarousel {
 			this.nextSlider.call(this);
 		};
 		this.styleName = main.replace(/^[#.]/, '');
+	}
+	setPosition(position) {
+		if (position < 0) {
+			position = this.slides.length - this.slidesToShow;
+		}
+		if (position > this.slides.length - this.slidesToShow) {
+			position = 0;
+		}
+		this.options.position = position;
+		this.wrap.style.transform = `translateX(-${this.options.position * this.options.slideWidth}%)`;
+	}
+	getData() {
+		return {
+			position: this.options.position,
+			slidesToShow: this.slidesToShow
+		};
 	}
 	init() {
 		this.addGloClass();
@@ -156,7 +173,7 @@ class sliderCarousel {
 		const checkResponse = () => {
 			const windowWidth = document.documentElement.clientWidth;
 			const nearestMore = allResponse.find(width => {
-				if (width > windowWidth) {
+				if (width >= windowWidth) {
 					return width;
 				}
 			});
@@ -179,7 +196,7 @@ class sliderCarousel {
 					this.remove();
 				}
 			} else {
-				if (this.slidesToShow) {
+				if (this.slidesToShowDefault) {
 					this.slidesToShow = slidesToShowDefault;
 					this.options.slideWidth = (Math.floor((100 / this.slidesToShow * 10)) / 10);
 					this.wrap.style.transform = `translateX(-0%)`;

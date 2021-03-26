@@ -1,15 +1,43 @@
 import StaticSlider from '../plugins/staticSlider';
+import SliderCarousel from '../plugins/sliderCarousel';
 
 const toggleScheme = () => {
-	const nav = document.querySelector('.scheme-nav');
-	const navOptions = nav.querySelectorAll('.scheme-nav__item');
-	const descriptions = document.querySelectorAll('.scheme-description-block');
+	let currentSlide = 0;
+
+	const schemeTypesCarousel = new SliderCarousel({
+		wrap: `.nav-scheme-slider`,
+		main: `.nav-wrap-scheme`,
+		prev: '#nav-arrow-scheme_left',
+		next: '#nav-arrow-scheme_right',
+		slidesToShow: false,
+		infinity: true,
+		responsive: [
+			{
+				breakpoint: 1024,
+				slidesToShow: 3
+			},
+			{
+				breakpoint: 768,
+				slidesToShow: 3
+			},
+			{
+				breakpoint: 576,
+				slidesToShow: 1
+			}
+		]
+	});
+	schemeTypesCarousel.init();
+
 	const schemeSlider = new StaticSlider({
 		wrap: `.scheme-slider`,
 		main: `.scheme-slider-wrap`
 	});
 	schemeSlider.init();
-	// Для открытия конкретного документа в модальном окне
+
+	const nav = document.querySelector('.scheme-nav');
+	const navOptions = nav.querySelectorAll('.scheme-nav__item');
+	const descriptions = document.querySelectorAll('.scheme-description-block');
+
 	nav.addEventListener('click', event => {
 		if (window.innerWidth > 576) {
 			const target = event.target.closest('.scheme-nav__item');
@@ -19,6 +47,7 @@ const toggleScheme = () => {
 					elem.classList.remove('active');
 					descriptions[index].classList.remove('visible-content-block');
 					if (elem.dataset.name === dataType) {
+						currentSlide = index;
 						schemeSlider.setCurrentSlide(index);
 						elem.classList.add('active');
 						descriptions[index].classList.add('visible-content-block');
@@ -29,7 +58,6 @@ const toggleScheme = () => {
 			}
 		// Для переключения слайдов при минимальном количестве опций на экране
 		} else {
-			let currentSlide;
 			navOptions.forEach((elem, index) => {
 				if (elem.classList.contains('active')) {
 					currentSlide = index;
@@ -58,7 +86,12 @@ const toggleScheme = () => {
 			schemeSlider.setCurrentSlide(currentSlide);
 		}
 	});
-
+	window.addEventListener('orientationchange', () => {
+		// Для правильного отображения слайдов при повороте экрана
+		setTimeout(() => {
+			schemeTypesCarousel.setPosition(currentSlide);
+		});
+	});
 
 };
 
