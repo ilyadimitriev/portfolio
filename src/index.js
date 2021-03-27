@@ -29,6 +29,20 @@ const scrollUp = () => {
 	});
 };
 
+const servicesCarousel = new TinyInfinitCarousel({
+	wrap: `.services-slider`,
+	main: `.services`,
+	prev: '#services-arrow_left',
+	next: '#services-arrow_right',
+	slidesToShow: false,
+	responsive: [
+		{
+			breakpoint: 576,
+			slidesToShow: true
+		}
+	]
+});
+
 const advantagesCarousel = new TinyInfinitCarousel({
 	wrap: `.formula-slider`,
 	main: `.formula-slider-wrap`,
@@ -90,6 +104,7 @@ const init = () => {
 	showPhone();
 	scrollUp();
 	phoneMask();
+	servicesCarousel.init();
 	sendForm('feedback1');
 	sendForm('feedback2');
 	sendForm('feedback3');

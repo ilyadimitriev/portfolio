@@ -560,7 +560,15 @@ template, [hidden] {
       margin-left: auto;
       margin-right: auto;
       font-size: 12px; }
-
+      #services-arrow_right, #services-arrow_left {
+        top: 60%;
+      }
+      #services-arrow_left {
+        left: 0px;
+      }
+      #services-arrow_right {
+        right: 0px;
+      }
 .feedback {
   position: absolute;
   display: -webkit-box;

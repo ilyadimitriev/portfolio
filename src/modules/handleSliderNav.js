@@ -47,10 +47,9 @@ const handleSliderNav = ({
 		} else {
 			const target = event.target;
 			// Узнаем индекс активного слайда
-			navSlideAllElems.find((elem, index) => {
+			navSlideAllElems.forEach((elem, index) => {
 				if (elem.classList.contains('active')) {
 					currentSlide = index;
-					return true;
 				}
 			});
 			// Если переключили слайд, совершаем действия с предыдущим активным слайдом
