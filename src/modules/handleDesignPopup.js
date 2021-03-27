@@ -1,10 +1,11 @@
 import StaticSlider from '../plugins/staticSlider';
 import SliderCarousel from '../plugins/sliderCarousel';
+import handleSliderNav from './handleSliderNav';
 
 const handleDesignPopup = () => {
 	let designPopupSlideSlider;
-	let currentSlide = 0;
 
+	// Слайдер навигации
 	const designTypesPopupCarousel = new SliderCarousel({
 		wrap: `#nav-list-popup-designs`,
 		main: `.nav-designs-popup`,
@@ -29,12 +30,14 @@ const handleDesignPopup = () => {
 	});
 	designTypesPopupCarousel.init();
 
+	// Слайдер с типами дизайна
 	const designPopupSlider = new StaticSlider({
 		wrap: `.popup-design-slider`,
 		main: `.popup-design-slider-wrap`
 	});
 	designPopupSlider.init();
 
+	// Слайдер внутри слайда с типом дизайна
 	const addSlider = wrapId => {
 		designPopupSlideSlider = new StaticSlider({
 			wrap: `#${wrapId}`,
@@ -47,67 +50,29 @@ const handleDesignPopup = () => {
 	};
 	addSlider('popup-designs-slider__style1');
 
-	const nav = document.querySelector('.popup-designs-nav-wrap');
-	const navOptions = nav.querySelectorAll('.designs-nav__item_popup');
 	const allDesignsStyles = document.querySelectorAll('.popup-designs-slide-wrap');
 	const allDescriptions = document.querySelectorAll('.popup-design-text');
 
-	nav.addEventListener('click', event => {
-		if (window.innerWidth > 576) {
-			const target = event.target.closest('.designs-nav__item_popup');
-			if (target) {
-				if (target.classList.contains('active')) {
-					return;
-				} else {
-					designPopupSlideSlider.remove();
-					navOptions.forEach((elem, index) => {
-						elem.classList.remove('active');
-						allDescriptions[index].classList.remove('visible-content-block');
-						if (elem === target) {
-							currentSlide = index;
-							elem.classList.add('active');
-							const wrapId = allDesignsStyles[index].id;
-							addSlider(wrapId);
-							designPopupSlider.setCurrentSlide(index);
-							allDescriptions[index].classList.add('visible-content-block');
-						}
-					});
-				}
-			}
-		// Для переключения слайдов при минимальном количестве опций на экране
-		} else {
-			navOptions.forEach((elem, index) => {
-				if (elem.classList.contains('active')) {
-					currentSlide = index;
-				}
-			});
-			const target = event.target;
-			if (target.closest('#nav-arrow-popup-designs_left')) {
-				navOptions[currentSlide].classList.remove('active');
-				currentSlide--;
-			} else if (target.closest('#nav-arrow-popup-designs_right')) {
-				navOptions[currentSlide].classList.remove('active');
-				currentSlide++;
-			} else {
-				return;
-			}
-			if (currentSlide < 0) {
-				currentSlide = navOptions.length - 1;
-			}
-			if (currentSlide > navOptions.length - 1) {
-				currentSlide = 0;
-			}
-			designPopupSlideSlider.remove();
-			navOptions[currentSlide].classList.add('active');
+	handleSliderNav({
+		nav: '.popup-designs-nav-wrap',
+		navSlideClass: '.designs-nav__item_popup',
+		leftArrowClass: '#nav-arrow-popup-designs_left',
+		rightArrowClass: '#nav-arrow-popup-designs_right',
+		breakpoint: 576,
+		elseToAdd(currentSlide) {
+			// Переключаемся на нужный слайд с типом дизайна
 			designPopupSlider.setCurrentSlide(currentSlide);
+			// Внутри выбранного слайда создаем слайдер
 			addSlider(allDesignsStyles[currentSlide].id);
-		}
-	});
-	window.addEventListener('orientationchange', () => {
-		// Для правильного отображения слайдов при повороте экрана
-		setTimeout(() => {
+			// Передаем выбранный вариант, чтобы слайдер навигации фокусировался на выбранном варианте при смене отоброжаемого количества вариантов
 			designTypesPopupCarousel.setPosition(currentSlide);
-		});
+			allDescriptions[currentSlide].classList.add('visible-content-block');
+		},
+		elseToRemove(currentSlide) {
+			// Удаляем слайдер из предыдущего слайда
+			designPopupSlideSlider.remove();
+			allDescriptions[currentSlide].classList.remove('visible-content-block');
+		}
 	});
 };
 

@@ -1,10 +1,11 @@
 import StaticSlider from '../plugins/staticSlider';
 import SliderCarousel from '../plugins/sliderCarousel';
+import handleSliderNav from './handleSliderNav';
 
 const toggleRepairTypes = () => {
 	let repairSlideSlider;
-	let currentSlide = 0;
 
+	// Слайдер навигации
 	const repairTypesCarousel = new SliderCarousel({
 		wrap: `.nav-list-repair`,
 		main: `.repair-types-nav`,
@@ -47,64 +48,23 @@ const toggleRepairTypes = () => {
 	};
 	addSlider('types-repair1');
 
-	const nav = document.querySelector('.nav-wrap-repair');
-	const navOptions = nav.querySelectorAll('.repair-types-nav__item');
 	const allRrepairTypeSlides = document.querySelectorAll('.repair-slider>.repair-slide-wrap');
 
-	nav.addEventListener('click', event => {
-		if (window.innerWidth > 576) {
-			const target = event.target.closest('.repair-types-nav__item');
-			if (target) {
-				if (target.classList.contains('active')) {
-					return;
-				} else {
-					repairSlideSlider.remove();
-					navOptions.forEach((elem, index) => {
-						elem.classList.remove('active');
-						if (elem === target) {
-							currentSlide = index;
-							elem.classList.add('active');
-							repairSlider.setCurrentSlide(index);
-							const wrapId = allRrepairTypeSlides[index].id;
-							addSlider(wrapId);
-						}
-					});
-				}
-			}
-		// Для переключения слайдов при минимальном количестве опций на экране
-		} else {
-			navOptions.forEach((elem, index) => {
-				if (elem.classList.contains('active')) {
-					currentSlide = index;
-				}
-			});
-			const target = event.target;
-			if (target.closest('#nav-arrow-repair-left_base')) {
-				navOptions[currentSlide].classList.remove('active');
-				currentSlide--;
-			} else if (target.closest('#nav-arrow-repair-right_base')) {
-				navOptions[currentSlide].classList.remove('active');
-				currentSlide++;
-			} else {
-				return;
-			}
-			if (currentSlide < 0) {
-				currentSlide = navOptions.length - 1;
-			}
-			if (currentSlide > navOptions.length - 1) {
-				currentSlide = 0;
-			}
-			repairSlideSlider.remove();
-			navOptions[currentSlide].classList.add('active');
-			repairSlider.setCurrentSlide(currentSlide);
+	handleSliderNav({
+		nav: '.nav-wrap-repair',
+		navSlideClass: '.repair-types-nav__item',
+		leftArrowClass: '#nav-arrow-repair-left_base',
+		rightArrowClass: '#nav-arrow-repair-right_base',
+		breakpoint: 576,
+		elseToAdd(currentSlide) {
 			addSlider(allRrepairTypeSlides[currentSlide].id);
-		}
-	});
-	window.addEventListener('orientationchange', () => {
-		// Для правильного отображения слайдов при повороте экрана
-		setTimeout(() => {
+			repairSlider.setCurrentSlide(currentSlide);
+			// Передаем выбранный вариант, чтобы слайдер навигации фокусировался на выбранном варианте при смене отоброжаемого количества вариантов
 			repairTypesCarousel.setPosition(currentSlide);
-		});
+		},
+		elseToRemove() {
+			repairSlideSlider.remove();
+		}
 	});
 };
 

@@ -14,6 +14,8 @@ import toggleDesign from './modules/toggleDesign';
 import handleDesignPopup from './modules/handleDesignPopup';
 import togglePortfolio from './modules/togglePortfolio';
 import handlePortfolioPopup from './modules/handlePortfolioPopup';
+import sendForm from './modules/sendForm';
+import handleRepairPopup from './modules/handleRepairPopup';
 
 import SliderCarousel from './plugins/sliderCarousel';
 import TinyInfinitCarousel from './plugins/tinyInfinitCarousel';
@@ -84,10 +86,16 @@ const partnersCarousel = new SliderCarousel({
 });
 
 const init = () => {
+	handleMenu();
 	showPhone();
 	scrollUp();
 	phoneMask();
-	accordionQA();
+	sendForm('feedback1');
+	sendForm('feedback2');
+	sendForm('feedback3');
+	sendForm('feedback4');
+	sendForm('feedback5');
+	sendForm('feedback6');
 	showAdvantages();
 	showHint();
 	advantagesCarousel.init();
@@ -99,14 +107,14 @@ const init = () => {
 	reviewsCarousel.init();
 	toggleScheme();
 	partnersCarousel.init();
-	handleMenu();
+	accordionQA();
 	togglePopup({
 		popupType: 'popup-menu',
 		openBtnClass: 'link-popup-menu'
 	});
 	togglePopup({
 		popupType: 'popup-repair-types',
-		openBtnClass: 'link-popup-repair'
+		openBtnClass: 'link-list-repair'
 	});
 	togglePopup({
 		popupType: 'popup-privacy',
@@ -128,6 +136,7 @@ const init = () => {
 		popupType: 'popup-portfolio',
 		openBtnClass: 'portfolio-slider__slide-frame'
 	});
+	handleRepairPopup();
 	handleTransparencyPopup();
 	handlePortfolioPopup();
 	handleDesignPopup();

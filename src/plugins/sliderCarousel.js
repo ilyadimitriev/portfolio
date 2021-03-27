@@ -5,6 +5,7 @@ class sliderCarousel {
 		prev,
 		next,
 		position = 0,
+		truePosition = false,
 		slidesToShow = false,
 		infinity = false,
 		responsive = []
@@ -18,6 +19,7 @@ class sliderCarousel {
 		this.slidesToShowDefault = slidesToShow;
 		this.options = {
 			position,
+			truePosition,
 			infinity,
 			slideWidth: (Math.floor((100 / this.slidesToShow * 10)) / 10)
 		};
@@ -30,15 +32,17 @@ class sliderCarousel {
 		};
 		this.styleName = main.replace(/^[#.]/, '');
 	}
+	// Для фокуса на выбранном слайде при смене разрешения. Передавать методу номер слайда, который выбрали.
 	setPosition(position) {
 		if (position < 0) {
-			position = this.slides.length - this.slidesToShow;
+			position = this.slides.length - 1;
 		}
-		if (position > this.slides.length - this.slidesToShow) {
+		if (position > this.slides.length - 1) {
 			position = 0;
 		}
-		this.options.position = position;
-		this.wrap.style.transform = `translateX(-${this.options.position * this.options.slideWidth}%)`;
+		this.options.truePosition = position;
+		// this.options.position = position;
+		// this.wrap.style.transform = `translateX(-${this.options.position * this.options.slideWidth}%)`;
 	}
 	getData() {
 		return {
@@ -188,7 +192,15 @@ class sliderCarousel {
 				this.slidesToShow = this.responsive[responsiveId].slidesToShow;
 				if (this.slidesToShow) {
 					this.options.slideWidth = (Math.floor((100 / this.slidesToShow * 10)) / 10);
-					this.wrap.style.transform = `translateX(-0%)`;
+					// если передавали значение truePosition через метод setPosition
+					if (this.options.truePosition !== false) {
+						if (this.options.truePosition > this.slides.length - this.slidesToShow) {
+							this.options.position = this.slides.length - this.slidesToShow;
+						} else {
+							this.options.position = this.options.truePosition;
+						}
+					}
+					this.wrap.style.transform = `translateX(-${this.options.position * this.options.slideWidth}%)`;
 					this.addGloClass();
 					this.addStyle();
 					this.controlSlider();
@@ -199,7 +211,15 @@ class sliderCarousel {
 				if (this.slidesToShowDefault) {
 					this.slidesToShow = slidesToShowDefault;
 					this.options.slideWidth = (Math.floor((100 / this.slidesToShow * 10)) / 10);
-					this.wrap.style.transform = `translateX(-0%)`;
+					// если передавали значение truePosition через метод setPosition
+					if (this.options.truePosition !== false) {
+						if (this.options.truePosition > this.slides.length - this.slidesToShow) {
+							this.options.position = this.slides.length - this.slidesToShow;
+						} else {
+							this.options.position = this.options.truePosition;
+						}
+					}
+					this.wrap.style.transform = `translateX(-${this.options.position * this.options.slideWidth}%)`;
 					this.addGloClass();
 					this.addStyle();
 					this.controlSlider();

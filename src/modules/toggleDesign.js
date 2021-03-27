@@ -1,11 +1,12 @@
 import StaticSlider from '../plugins/staticSlider';
 import SliderCarousel from '../plugins/sliderCarousel';
+import handleSliderNav from './handleSliderNav';
 
 const toggleDesign = () => {
 	let designSlideSlider;
-	let currentSlide = 0;
 	let paginationVisible = document.querySelector('.preview-block.visible');
 
+	// Слайдер навигации
 	const designTypesCarousel = new SliderCarousel({
 		wrap: `.nav-list-designs`,
 		main: `.nav-designs`,
@@ -48,8 +49,6 @@ const toggleDesign = () => {
 	};
 	addSlider('designs-slider__style1');
 
-	const nav = document.querySelector('.designs-nav-wrap');
-	const navOptions = nav.querySelectorAll('.designs-nav__item');
 	const allDesignsStyles = document.querySelectorAll('.design-slider__style>.designs-slide-wrap');
 	const paginationContainer = document.querySelector('.preview-block-container');
 
@@ -68,63 +67,24 @@ const toggleDesign = () => {
 	};
 	enablePagination();
 
-	nav.addEventListener('click', event => {
-		if (window.innerWidth > 576) {
-			const target = event.target.closest('.designs-nav__item');
-			if (target) {
-				if (target.classList.contains('active')) {
-					return;
-				} else {
-					designSlideSlider.remove();
-					navOptions.forEach((elem, index) => {
-						elem.classList.remove('active');
-						paginationContainer.querySelectorAll('.preview-block')[index].classList.remove('visible');
-						if (elem === target) {
-							currentSlide = index;
-							elem.classList.add('active');
-							const wrapId = allDesignsStyles[index].id;
-							addSlider(wrapId);
-							designSlider.setCurrentSlide(index);
-							paginationContainer.querySelectorAll('.preview-block')[index].classList.add('visible');
-							paginationVisible = document.querySelector('.preview-block.visible');
-						}
-					});
-				}
-			}
-		// Для переключения слайдов при минимальном количестве опций на экране
-		} else {
-			navOptions.forEach((elem, index) => {
-				if (elem.classList.contains('active')) {
-					currentSlide = index;
-				}
-			});
-			const target = event.target;
-			if (target.closest('#nav-arrow-designs_left')) {
-				navOptions[currentSlide].classList.remove('active');
-				currentSlide--;
-			} else if (target.closest('#nav-arrow-designs_right')) {
-				navOptions[currentSlide].classList.remove('active');
-				currentSlide++;
-			} else {
-				return;
-			}
-			if (currentSlide < 0) {
-				currentSlide = navOptions.length - 1;
-			}
-			if (currentSlide > navOptions.length - 1) {
-				currentSlide = 0;
-			}
-			designSlideSlider.remove();
-			navOptions[currentSlide].classList.add('active');
-			designSlider.setCurrentSlide(currentSlide);
+	handleSliderNav({
+		nav: '.designs-nav-wrap',
+		navSlideClass: '.designs-nav__item',
+		leftArrowClass: '#nav-arrow-designs_left',
+		rightArrowClass: '#nav-arrow-designs_right',
+		breakpoint: 576,
+		elseToAdd(currentSlide) {
 			addSlider(allDesignsStyles[currentSlide].id);
-		}
-	});
-	window.addEventListener('orientationchange', () => {
-		// Для правильного отображения слайдов при повороте экрана
-		setTimeout(() => {
+			designSlider.setCurrentSlide(currentSlide);
+			paginationContainer.querySelectorAll('.preview-block')[currentSlide].classList.add('visible');
+			paginationVisible = document.querySelector('.preview-block.visible');
+			// Передаем выбранный вариант, чтобы слайдер навигации фокусировался на выбранном варианте при смене отоброжаемого количества вариантов
 			designTypesCarousel.setPosition(currentSlide);
-		});
+		},
+		elseToRemove(currentSlide) {
+			designSlideSlider.remove();
+			paginationContainer.querySelectorAll('.preview-block')[currentSlide].classList.remove('visible');
+		}
 	});
 };
 
