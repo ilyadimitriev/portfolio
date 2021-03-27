@@ -129,7 +129,7 @@ const init = () => {
 	});
 	togglePopup({
 		popupType: 'popup-repair-types',
-		openBtnClass: 'link-list-repair'
+		openBtnClass: 'link-popup-repair'
 	});
 	togglePopup({
 		popupType: 'popup-privacy',

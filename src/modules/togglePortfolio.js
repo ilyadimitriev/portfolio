@@ -15,6 +15,10 @@ const togglePortfolio = () => {
 				slidesToShow: 2
 			},
 			{
+				breakpoint: 900,
+				slidesToShow: 1
+			},
+			{
 				breakpoint: 578,
 				slidesToShow: false
 			}

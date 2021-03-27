@@ -4299,8 +4299,8 @@ div.wave-block:nth-child(17):after {
       .popup-menu-copyright {
         width: 65px;
         height: 50%;
-        margin-top: 220px;
-        padding-right: 65px; } }
+        margin-top: 220px; 
+      } }
   @media (max-width: 575px) and (max-height: 670px) {
     .popup-menu-copyright {
       margin-top: 200px; } }
@@ -5323,10 +5323,6 @@ div.wave-block:nth-child(17):after {
           -ms-flex-wrap: wrap;
           flex-wrap: wrap;
           max-width: 100%; } }
-      @media (max-width: 575px) {
-        .nav-list-popup-repair {
-          /* min-width: 2840px; */
-         } }
     .nav-list_vertical {
       width: 319px;
       margin-left: auto;

@@ -10,6 +10,7 @@ const togglePopup = ({
 			if (action === 'open') {
 				if (popup.classList.contains(`${popupType}`)) {
 					popup.style.visibility = `visible`;
+					document.body.style.overflowY = `hidden`;
 				} else if (popup.classList.contains(`popup-menu`) && popupType !== `popup-menu`) {
 					popup.querySelector('.popup-dialog-menu').classList.remove('active');
 					popup.style.visibility = `hidden`;
@@ -17,6 +18,7 @@ const togglePopup = ({
 			} else if (action === 'close') {
 				if (popup.classList.contains(`${popupType}`)) {
 					popup.style.visibility = `hidden`;
+					document.body.style.overflowY = `auto`;
 				}
 			}
 		});

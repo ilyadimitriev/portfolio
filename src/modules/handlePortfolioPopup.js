@@ -25,7 +25,7 @@ const handlePortfolioPopup = () => {
 			if (event.target.closest('.portfolio-slider-mobile')) {
 				portfolioMobileSlides.forEach((elem, index) => {
 					allDescriptions[index].classList.remove('visible');
-					if (elem === target) {
+					if (elem.classList.contains('active')) {
 						popupPortfolioCarousel.setCurrentSlide(index);
 						allDescriptions[index].classList.add('visible');
 					}
@@ -54,6 +54,16 @@ const handlePortfolioPopup = () => {
 			});
 		}
 	});
+	// Сглаживаю ошибку верстальщика, чтоб при неадекватной верстке блок все равно смотрелся нормально
+	const resizePortfolioPopup = () => {
+		if (screen.height < document.querySelector('.popup-dialog-portfolio').clientHeight) {
+			document.querySelector('.popup-dialog-portfolio').style.transform = `scale(${screen.height / document.querySelector('.popup-dialog-portfolio').clientHeight})`;
+		} else {
+			document.querySelector('.popup-dialog-portfolio').style.transform = '';
+		}
+	};
+	resizePortfolioPopup();
+	window.addEventListener('resize', resizePortfolioPopup);
 };
 
 export default handlePortfolioPopup;
