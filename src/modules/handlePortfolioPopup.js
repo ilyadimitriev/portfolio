@@ -54,16 +54,16 @@ const handlePortfolioPopup = () => {
 			});
 		}
 	});
-	// Сглаживаю ошибку верстальщика, чтоб при неадекватной верстке блок все равно смотрелся нормально
-	const resizePortfolioPopup = () => {
-		if (window.innerHeight < document.querySelector('.popup-dialog-portfolio').clientHeight) {
-			document.querySelector('.popup-dialog-portfolio').style.transform = `scale(${window.innerHeight / document.querySelector('.popup-dialog-portfolio').clientHeight})`;
-		} else {
-			document.querySelector('.popup-dialog-portfolio').style.transform = '';
-		}
-	};
-	resizePortfolioPopup();
-	window.addEventListener('resize', resizePortfolioPopup);
+	// // Сглаживаю ошибку верстальщика, чтоб при неадекватной верстке блок все равно смотрелся нормально
+	// const resizePortfolioPopup = () => {
+	// 	if (window.innerHeight < document.querySelector('.popup-dialog-portfolio').clientHeight) {
+	// 		document.querySelector('.popup-dialog-portfolio').style.transform = `scale(${window.innerHeight / document.querySelector('.popup-dialog-portfolio').clientHeight})`;
+	// 	} else {
+	// 		document.querySelector('.popup-dialog-portfolio').style.transform = '';
+	// 	}
+	// };
+	// resizePortfolioPopup();
+	// window.addEventListener('resize', resizePortfolioPopup);
 };
 
 export default handlePortfolioPopup;

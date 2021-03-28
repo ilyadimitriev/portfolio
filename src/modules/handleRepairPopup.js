@@ -107,18 +107,6 @@ const handleRepairPopup = () => {
 					tableAll[currentSlide].classList.remove('active');
 				}
 			});
-
-			// Сглаживаю ошибку верстальщика, чтоб при неадекватной верстке блок все равно смотрелся нормально
-			const resizeRepairPopup = () => {
-				if (window.innerHeight < document.querySelector('.popup-dialog-repair-types').clientHeight) {
-					document.querySelector('.popup-dialog-repair-types').style.transform = `scale(${window.innerHeight / (document.querySelector('.popup-dialog-repair-types').clientHeight)})`;
-				} else {
-					document.querySelector('.popup-dialog-repair-types').style.transform = '';
-				}
-			};
-			resizeRepairPopup();
-			window.addEventListener('resize', resizeRepairPopup);
-
 		})
 		.catch(error => {
 			console.log(error);

@@ -3630,6 +3630,7 @@ div.wave-block:nth-child(17):after {
     .popup-dialog {
       max-height: 480px; } }
     .popup-dialog-menu {
+      overflow-x: hidden;
       position: absolute;
       visibility: visible;
       top: 0;
@@ -4286,7 +4287,7 @@ div.wave-block:nth-child(17):after {
     display: -ms-flexbox;
     display: flex;
     width: 110px;
-    height: 105%;
+    /* height: 105%; */
     margin-top: 260px;
     padding-right: 44px;
     -webkit-writing-mode: vertical-rl;
@@ -4315,11 +4316,16 @@ div.wave-block:nth-child(17):after {
     @media (max-width: 365px) {
       .popup-menu-copyright {
         padding-right: 48px; } }
+  .popup-menu {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
   .popup-menu .row {
     -webkit-box-pack: end;
     -ms-flex-pack: end;
     justify-content: flex-end; }
   .popup-menu-main {
+    height: fit-content;
     position: relative;
     font-weight: 500;
     font-size: 16px;

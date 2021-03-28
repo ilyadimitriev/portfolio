@@ -20,18 +20,18 @@ const sendForm = formId => {
 	};
 
 	const handleResponse = () => {
+		const html = document.querySelector('html');
 		document.querySelector('.popup-thank').style.visibility = `visible`;
-		const closeBtns = document.querySelectorAll(`.popup-thank .close`);
-		closeBtns.forEach(btn => {
-			btn.addEventListener('click', () => {
-				document.querySelector('.popup-thank').style.visibility = `hidden`;
-			});
-		});
 		setTimeout(() => {
 			document.querySelector('.popup-thank').style.visibility = `hidden`;
-		}, 6000);
+			document.querySelector('.popup-consultation').style.visibility = `hidden`;
+			html.style.overflowY = `auto`;
+		}, 4000);
 		form.querySelectorAll(`input`).forEach(input => {
 			input.value = ``;
+			if (input.checked) {
+				input.checked = false;
+			}
 		});
 		statusMessage.innerHTML = ``;
 	};

@@ -129,27 +129,37 @@ const init = () => {
 	});
 	togglePopup({
 		popupType: 'popup-repair-types',
-		openBtnClass: 'link-popup-repair'
+		openBtnClass: 'link-popup-repair',
+		popupDialogClass: 'popup-dialog-repair-types'
 	});
 	togglePopup({
 		popupType: 'popup-privacy',
-		openBtnClass: 'link-popup-privacy'
+		openBtnClass: 'link-popup-privacy',
+		popupDialogClass: 'popup-dialog-privacy'
 	});
 	togglePopup({
 		popupType: 'popup-design',
-		openBtnClass: 'link-list-designs'
+		openBtnClass: 'link-list-designs',
+		popupDialogClass: 'popup-dialog-design'
 	});
 	togglePopup({
 		popupType: 'popup-consultation',
-		openBtnClass: 'link-popup-consultation'
+		openBtnClass: 'link-popup-consultation',
+		popupDialogClass: 'popup-dialog-consultation'
 	});
 	togglePopup({
 		popupType: 'popup-transparency',
-		openBtnClass: 'transparency-item__img'
+		openBtnClass: 'transparency-item__img',
+		popupDialogClass: 'popup-dialog-transparency'
 	});
 	togglePopup({
 		popupType: 'popup-portfolio',
-		openBtnClass: 'portfolio-slider__slide-frame'
+		openBtnClass: 'portfolio-slider__slide-frame',
+		popupDialogClass: 'popup-dialog-portfolio'
+	});
+	togglePopup({
+		popupType: 'popup-thank',
+		popupDialogClass: 'popup-dialog-thank'
 	});
 	handleRepairPopup();
 	handleTransparencyPopup();

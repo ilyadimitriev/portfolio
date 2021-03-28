@@ -1,11 +1,13 @@
 const togglePopup = ({
 	popupType,
+	popupDialogClass,
 	openBtnClass
 }) => {
 	const openBtns = document.querySelectorAll(`.${openBtnClass}`);
 	const closeBtns = document.querySelectorAll(`.${popupType} .close`);
 	const popup = document.querySelector(`.${popupType}`);
-	const dialogMenu = document.querySelector('.popup-dialog-menu');
+	const popupDialog = document.querySelector(`.${popupDialogClass}`);
+	const menuDialog = document.querySelector(`.popup-dialog-menu`);
 	const html = document.querySelector('html');
 	const toggle = (popupType, action, event) => {
 		const allPopups = document.querySelectorAll('.popup');
@@ -15,7 +17,7 @@ const togglePopup = ({
 					popup.style.visibility = `visible`;
 					html.style.overflowY = `hidden`;
 					if (popupType === `popup-menu`) {
-						dialogMenu.classList.add('active');
+						menuDialog.classList.add('active');
 					}
 				} else if (popup.classList.contains(`popup-menu`) && popupType !== `popup-menu`) {
 					popup.querySelector('.popup-dialog-menu').classList.remove('active');
@@ -26,19 +28,37 @@ const togglePopup = ({
 					popup.style.visibility = `hidden`;
 					html.style.overflowY = `auto`;
 					if (popupType === `popup-menu`) {
-						dialogMenu.classList.remove('active');
+						menuDialog.classList.remove('active');
+					}
+					if (document.querySelector('.popup-consultation').style.visibility === `visible`) {
+						document.querySelector('.popup-consultation').style.visibility = `hidden`;
 					}
 				}
 			}
 		});
 	};
-	openBtns.forEach(btn => {
-		btn.addEventListener('click', toggle.bind(null, `${popupType}`, 'open'));
-	});
+	if (openBtns) {
+		openBtns.forEach(btn => {
+			btn.addEventListener('click', toggle.bind(null, `${popupType}`, 'open'));
+		});
+	}
 	closeBtns.forEach(btn => {
 		btn.addEventListener('click', toggle.bind(null, `${popupType}`, 'close'));
 	});
 	popup.addEventListener('click', toggle.bind(null, `${popupType}`, 'close'));
+
+	if (popupDialog) {
+		// Сглаживаю ошибку верстальщика, чтоб при неадекватной верстке блок все равно смотрелся нормально
+		const resizePortfolioPopup = () => {
+			if (window.innerHeight < popupDialog.clientHeight) {
+				popupDialog.style.transform = `scale(${window.innerHeight / popupDialog.clientHeight})`;
+			} else {
+				popupDialog.style.transform = '';
+			}
+		};
+		resizePortfolioPopup();
+		window.addEventListener('resize', resizePortfolioPopup);
+	}
 };
 
 export default togglePopup;
