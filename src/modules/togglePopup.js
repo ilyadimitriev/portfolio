@@ -6,13 +6,14 @@ const togglePopup = ({
 	const closeBtns = document.querySelectorAll(`.${popupType} .close`);
 	const popup = document.querySelector(`.${popupType}`);
 	const dialogMenu = document.querySelector('.popup-dialog-menu');
+	const html = document.querySelector('html');
 	const toggle = (popupType, action, event) => {
 		const allPopups = document.querySelectorAll('.popup');
 		allPopups.forEach(popup => {
 			if (action === 'open') {
 				if (popup.classList.contains(`${popupType}`)) {
 					popup.style.visibility = `visible`;
-					document.body.style.overflowY = `hidden`;
+					html.style.overflowY = `hidden`;
 					if (popupType === `popup-menu`) {
 						dialogMenu.classList.add('active');
 					}
@@ -23,7 +24,7 @@ const togglePopup = ({
 			} else if (action === 'close') {
 				if (popup.classList.contains(`${popupType}`) && event.target === popup || event.target.matches(`.close`)) {
 					popup.style.visibility = `hidden`;
-					document.body.style.overflowY = `auto`;
+					html.style.overflowY = `auto`;
 					if (popupType === `popup-menu`) {
 						dialogMenu.classList.remove('active');
 					}

@@ -56,8 +56,8 @@ const handlePortfolioPopup = () => {
 	});
 	// Сглаживаю ошибку верстальщика, чтоб при неадекватной верстке блок все равно смотрелся нормально
 	const resizePortfolioPopup = () => {
-		if (screen.height < document.querySelector('.popup-dialog-portfolio').clientHeight) {
-			document.querySelector('.popup-dialog-portfolio').style.transform = `scale(${screen.height / document.querySelector('.popup-dialog-portfolio').clientHeight})`;
+		if (window.innerHeight < document.querySelector('.popup-dialog-portfolio').clientHeight) {
+			document.querySelector('.popup-dialog-portfolio').style.transform = `scale(${window.innerHeight / document.querySelector('.popup-dialog-portfolio').clientHeight})`;
 		} else {
 			document.querySelector('.popup-dialog-portfolio').style.transform = '';
 		}
